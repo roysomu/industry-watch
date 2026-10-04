@@ -1,0 +1,15 @@
+name: industry-watch
+acli_version: 1.8.0
+agent_directory: app
+region: us-central1
+base_template: adk
+generated_at: '2026-10-03T22:40:45.285987+00:00'
+language: python
+framework: google-adk
+create_params:
+  root_agent_name: industry_watch
+  deployment_target: agent_runtime
+  cicd_runner: skip
+  is_a2a: true
+  agent_gateway: false
+  agent_guidance_filename: GEMINI.md

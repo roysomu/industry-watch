@@ -1,0 +1,27 @@
+metrics_to_run:
+  - multi_turn_task_success
+  - multi_turn_tool_use_quality
+  - multi_turn_hallucination
+  - verbatim_citations_metric
+
+custom_metrics:
+  - name: verbatim_citations_metric
+    custom_function_file: verbatim_citations.py
+
+  - name: multi_turn_hallucination
+    prompt_template: |
+      You are an expert financial evaluation judge.
+      Analyze whether the agent made any hallucinated claims, invented facts,
+      or ungrounded statements that do not appear in the tool responses.
+
+      User Prompt: {prompt}
+      Agent Final Response: {response}
+      Conversation and Tool Trace: {agent_data}
+
+      Scoring Rubric:
+      - Score 1.0 (Grounded): All factual statements regarding corporate disclosures, SEC filings, items, and claims are strictly backed by tool output.
+      - Score 0.5 (Minor Unsubstantiated): Minor extrapolations or statements that lack direct citation but don't contradict evidence.
+      - Score 0.0 (Hallucinated): Fabricated filing accession numbers, invented 8-K items, or claims stated as verified facts without backing disclosures.
+
+      Return JSON:
+      {"score": <0.0 | 0.5 | 1.0>, "explanation": "<detailed rationale>"}
